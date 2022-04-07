@@ -61,24 +61,20 @@ def display_mp4(path):
 import matplotlib.pyplot as plt
 from PIL import Image
 import numpy as np
+import glob
 import os
 
 def display_pic(folder):
     fig = plt.figure(figsize=(30, 60))
-    files = os.listdir(folder)
-    files.sort()
+    files = sorted(glob.glob('sample_images/*.jpg'))
     for i, file in enumerate(files):
-        if file=='.ipynb_checkpoints':
-           continue
-        if file=='.DS_Store':
-           continue
-        img = Image.open(folder+'/'+file)    
+        img = Image.open(file)    
         images = np.asarray(img)
         ax = fig.add_subplot(10, 5, i+1, xticks=[], yticks=[])
         image_plt = np.array(images)
         ax.imshow(image_plt)
-        #name = os.path.splitext(file)
-        ax.set_xlabel(file, fontsize=30)               
+        name = os.path.basename(file)
+        ax.set_xlabel(name, fontsize=30)               
     plt.show()
     plt.close()
 
